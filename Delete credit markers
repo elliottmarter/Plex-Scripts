@@ -1,3 +1,5 @@
+# This will remove all credit markers in Plex, if you disable credit markers previously generated ones wont be deleted so this removes them.
+
 CONTAINER=Plex-Media-Server
 DB="/mnt/user/appdata/Plex-Media-Server/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
 Q="tag_id IN (SELECT id FROM tags WHERE tag_type=12) AND text='credits'"
