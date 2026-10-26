@@ -1,0 +1,13 @@
+CONTAINER=Plex-Media-Server
+DB="/mnt/user/appdata/Plex-Media-Server/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
+Q="tag_id IN (SELECT id FROM tags WHERE tag_type=12) AND text='credits'"
+
+docker cp "$CONTAINER":/usr/lib/plexmediaserver /tmp/pms
+docker stop "$CONTAINER"
+
+"/tmp/pms/Plex SQLite" "$DB" "SELECT COUNT(*) FROM taggings WHERE $Q;"
+"/tmp/pms/Plex SQLite" "$DB" "DELETE FROM taggings WHERE $Q;"
+"/tmp/pms/Plex SQLite" "$DB" "SELECT COUNT(*) FROM taggings WHERE $Q;"
+
+docker start "$CONTAINER"
+rm -rf /tmp/pms
